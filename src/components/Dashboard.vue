@@ -251,42 +251,124 @@
                 <v-spacer></v-spacer>
                 <v-icon color="grey" small>mdi-close</v-icon>
               </v-toolbar>
-              <v-chip-group column multiple 
-              active-class="blue white--text"
-              class="ml-2">
-              <v-chip v-for="size in sizes"
-              :key="size"
-              :value="size"
-              class="size">
-              {{ size }}
-              </v-chip>
+              <v-chip-group
+                column
+                multiple
+                active-class="blue white--text"
+                class="ml-2"
+              >
+                <v-chip
+                  v-for="size in sizes"
+                  :key="size"
+                  :value="size"
+                  class="size"
+                >
+                  {{ size }}
+                </v-chip>
               </v-chip-group>
             </v-card>
           </v-col>
           <v-col cols="9" class="mt-n3">
             <v-row>
-              <v-col cols="12" sm="4" 
-              v-for="(clothe, i) in clothes" 
-              :key="i"
-              :class="clothe.class">
-              <v-hover v-slot:default="{hover}">
-              <v-card height="300" align="center"
-              flat outlined tile>
-              <v-card-actions>
-                <v-spacer></v-spacer>
-                  <v-btn color="black" small dark>{{clothe.sold}}</v-btn>
-              </v-card-actions>
-              <v-img :src=clothe.image width="200" height="200"
-              contain></v-img>
-              <v-card-text class="mt-n4">
-                <strong :class="hover ? 'red--text' : 'black--text'">{{clothe.title}}</strong>
-              </v-card-text>
-              </v-card>
-              </v-hover>
+              <v-col
+                cols="12"
+                sm="4"
+                v-for="(clothe, i) in clothes"
+                :key="i"
+                :class="clothe.class"
+              >
+                <v-hover v-slot:default="{ hover }">
+                  <v-card height="300" align="center" flat outlined tile>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="black" small dark>{{ clothe.sold }}</v-btn>
+                    </v-card-actions>
+                    <v-img
+                      :src="clothe.image"
+                      width="200"
+                      height="200"
+                      contain
+                    ></v-img>
+                    <v-card-text class="mt-n4">
+                      <strong :class="hover ? 'red--text' : 'black--text'">{{
+                        clothe.title
+                      }}</strong>
+                    </v-card-text>
+                    <v-expand-transition>
+                      <div
+                        v-if="hover"
+                        class="d-flex transition-fast-in-fast-out blue v-card--reveal display-3 white--text"
+                        style="height: 100%"
+                      >
+                        <v-btn rounded color="white">
+                          <v-icon>mdi-card-outlined</v-icon>
+                          Buy
+                        </v-btn>
+                        <v-btn fab small color="white" class="ml-2">
+                          <v-icon color="black">mdi-content-copy</v-icon>
+                        </v-btn>
+                        <v-btn fab small color="white" class="ml-2">
+                          <v-icon color="black">mdi-heart-outline</v-icon>
+                        </v-btn>
+                      </div>
+                    </v-expand-transition>
+                  </v-card>
+                </v-hover>
               </v-col>
             </v-row>
           </v-col>
+          <v-col cols="12" sm="3" class="mt-n3 pr-0 pb-0">
+            <v-toolbar flat outlined> </v-toolbar>
+          </v-col>
+          <v-col cols="12" sm="3" class="mt-n3 px-0 pb-0">
+            <v-toolbar flat outlined>
+              <v-btn icon class="mr-1">
+                <v-icon color="grey">mdi-chevron-up</v-icon>
+              </v-btn>
+              <v-divider vertical></v-divider>
+            </v-toolbar>
+          </v-col>
+          <v-col cols="12" sm="3" class="mt-n3 px-0 pb-0">
+            <v-toolbar flat outlined class="text-center">
+              <v-pagination v-model="page" :length="4"></v-pagination>
+            </v-toolbar>
+          </v-col>
+          <v-col cols="12" sm="3" class="mt-n3 pl-0 pb-0">
+            <v-toolbar flat outlined>
+              <v-btn icon class="mr-1">
+                <v-icon color="grey">mdi-chevron-down</v-icon>
+              </v-btn>
+              <v-divider vertical></v-divider>
+            </v-toolbar>
+          </v-col>
+
         </v-row>
+      </v-card>
+      <v-card color="#EFF0F2" height="250px" tile flat dark
+      class="d-flex align-center justify-center mt-n10 card2">
+      <v-row>
+        <v-col cols="12" sm="12">
+          <h4 class="text-center black--text mt-10">
+            SUBSCRIBE TO OUR NEWSLETTER
+          </h4>
+        </v-col>
+        <v-col cols="12" sm="12">
+          <h6 class="text-center grey--text">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci
+            dolorem dignissimos <br />
+            Eos eligendi cupiditate cumque nemo sapiente quae omnis doloribus
+            ducimus.
+          </h6>
+        </v-col>
+        <v-col cols="12" sm="12">
+          <v-card flat color="transparent" 
+          class="d-flex justify-center">
+          <v-text-field placeholder="Enter You Email" 
+          rounded class="shrink" background-color="grey"
+          filled append-icon="mdi-email-outline" dense></v-text-field>
+          </v-card>
+        </v-col>
+      </v-row>
       </v-card>
     </v-container>
   </div>
@@ -295,6 +377,7 @@
 <script>
 export default {
   data: () => ({
+    page: 1,
     items: [
       {
         text: "Home",
@@ -334,7 +417,7 @@ export default {
       { title: "Training & Gym", state: true },
       { title: "Basketball", state: false },
     ],
-      sizes: [
+    sizes: [
       "35",
       "36",
       "37",
@@ -348,7 +431,7 @@ export default {
       "45",
       "46",
     ],
-        clothes: [
+    clothes: [
       {
         class: "pa-0",
         sold: "-20%",
@@ -457,7 +540,7 @@ export default {
   justify-content: center;
   opacity: 0.5;
   position: absolute;
-  widows: 100%;
+  width: 100%;
 }
 .card1 {
   z-index: 10;
